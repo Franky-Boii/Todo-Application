@@ -56,3 +56,47 @@ input {
 
 .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
 .history-item { padding: 10px; border-bottom: 1px solid var(--border); }
+
+.sub-text { color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px; }
+
+.note-textarea {
+  width: 100%;
+  height: 150px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  color: white;
+  padding: 15px;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  resize: none;
+}
+
+.ai-btn {
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+  background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.ai-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.ai-output { border: 1px solid #8b5cf6 !important; }
+
+.summary-display {
+  background: #020617;
+  padding: 20px;
+  border-radius: 8px;
+  color: #10b981;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+.placeholder-text { color: #475569; font-style: italic; margin-top: 2rem; }

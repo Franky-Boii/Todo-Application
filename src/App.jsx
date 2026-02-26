@@ -59,25 +59,66 @@ function Dashboard({ tasks, setTasks }) {
   );
 }
 
-// --- STUDENT PROFILE COMPONENT ---
+// --- UPDATED STUDENT PROFILE COMPONENT ---
 function StudentProfile({ tasks }) {
   const { name } = useParams();
+  const [rawNotes, setRawNotes] = useState("");
+  const [aiSummary, setAiSummary] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const studentSessions = tasks.filter(t => t.title.includes(name));
+
+  const handleSummarize = () => {
+    if (!rawNotes) return alert("Please paste some session notes first!");
+    
+    setIsProcessing(true);
+    
+    // Simulating AI Processing delay
+    setTimeout(() => {
+      const formatted = `
+📊 SESSION SUMMARY FOR ${name.toUpperCase()}
+------------------------------------------
+🧠 PSYCHOLOGY: ${rawNotes.includes('fear') ? 'Working on market anxiety.' : 'Mindset is stabilizing.'}
+📈 STRATEGY: Focus on ${studentSessions[0]?.extendedProps?.pair || 'Current Pairs'}.
+📝 HOMEWORK: Review the London Open price action for the last 5 days.
+      `;
+      setAiSummary(formatted);
+      setIsProcessing(false);
+    }, 1500);
+  };
 
   return (
     <div className="profile-container">
       <Link to="/" className="back-btn"><ArrowLeft size={18} /> Back to Dashboard</Link>
+      
       <header className="profile-header">
-        <h1>{name}'s Trading History</h1>
+        <h1>{name}'s Performance Hub</h1>
       </header>
+
       <div className="profile-grid">
+        {/* Left: Input for Raw Notes */}
         <div className="glass-card">
-          <h3><Brain size={20} /> Mentor Notes</h3>
-          <div className="note-box"><p>Focus on discipline and risk management for {name}.</p></div>
+          <h3><Brain size={20} /> AI Session Summarizer</h3>
+          <p className="sub-text">Paste your raw session notes below:</p>
+          <textarea 
+            className="note-textarea"
+            placeholder="e.g. Student took a bad trade on Gold, ignored the trend, but managed risk well..."
+            value={rawNotes}
+            onChange={(e) => setRawNotes(e.target.value)}
+          ></textarea>
+          <button className="ai-btn" onClick={handleSummarize} disabled={isProcessing}>
+            {isProcessing ? "AI is thinking..." : "✨ Generate AI Summary"}
+          </button>
         </div>
-        <div className="glass-card">
-          <h3><Target size={20} /> Past Sessions</h3>
-          {studentSessions.map(s => <div key={s.id} className="history-item">{new Date(s.start).toLocaleDateString()} - {s.title}</div>)}
+
+        {/* Right: AI Output */}
+        <div className="glass-card ai-output">
+          <h3><Target size={20} /> Structured Growth Plan</h3>
+          {aiSummary ? (
+            <pre className="summary-display">{aiSummary}</pre>
+          ) : (
+            <p className="placeholder-text">Click generate to see the structured plan.</p>
+          )}
         </div>
       </div>
     </div>
